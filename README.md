@@ -9,6 +9,9 @@ Official website for the Washington Filipino Student Alliance (WFSA), a statewid
 - React
 - Tailwind CSS
 
+Continuous integration is configured with automated linting, type checking,
+format checking, and production build verification.
+
 ## Getting Started
 
 ### Prerequisites
