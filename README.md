@@ -4,10 +4,10 @@ Official website for the Washington Filipino Student Alliance (WFSA), a statewid
 
 ## Tech Stack
 
-* [Next.js](https://nextjs.org/)
-* TypeScript
-* React
-* Tailwind CSS
+- [Next.js](https://nextjs.org/)
+- TypeScript
+- React
+- Tailwind CSS
 
 ## Getting Started
 
@@ -15,9 +15,9 @@ Official website for the Washington Filipino Student Alliance (WFSA), a statewid
 
 Install:
 
-* Node.js 20.9+
-* npm
-* Git
+- Node.js 20.9+
+- npm
+- Git
 
 ### Installation
 
@@ -129,10 +129,10 @@ The WFSA website is currently under active development.
 
 Initial development is focused on the core public-facing experience, including:
 
-* Landing page
-* Chapter and school information
-* Events
-* Leadership
-* Responsive navigation
+- Landing page
+- Chapter and school information
+- Events
+- Leadership
+- Responsive navigation
 
 Administrative and content-management functionality will be introduced as development progresses.
