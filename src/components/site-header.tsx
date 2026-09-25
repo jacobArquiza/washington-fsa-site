@@ -30,7 +30,7 @@ export default function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-4 z-50 px-4">
+    <header className="fixed inset-x-0 top-4 z-50 px-4">
       <div className="mx-auto w-[90%] max-w-[1000px]">
         <nav
           aria-label="Primary navigation"
@@ -38,7 +38,8 @@ export default function SiteHeader() {
             flex items-center justify-between
             rounded-full
             border border-white/30
-            bg-white/60
+            bg-black/5
+            text-white
             px-6 py-3
             backdrop-blur-xl
             shadow-sm
@@ -47,7 +48,7 @@ export default function SiteHeader() {
           <Link
             href="/"
             aria-label="WFSA home"
-            className="rounded-sm font-semibold tracking-[0.18em] text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+            className="rounded-sm font-semibold tracking-[0.18em] text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
           >
             WFSA
           </Link>
@@ -71,7 +72,7 @@ export default function SiteHeader() {
 
             <Link
               href="/chapters"
-              className="rounded-full bg-deep-blue px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+              className="rounded-full bg-cream px-5 py-2.5 text-sm font-semibold text-black transition-opacity hover:bg-deep-blue hover:text-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
             >
               Explore Chapters
             </Link>
