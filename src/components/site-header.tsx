@@ -54,9 +54,7 @@ export default function SiteHeader() {
       <div className="mx-auto w-full max-w-[1000px] lg:w-[90%]">
         <nav
           aria-label="Primary navigation"
-          className={`relative flex flex-wrap items-center justify-between border px-4 py-2 text-white shadow-sm backdrop-blur-xl transition-[background-color,border-color,border-radius] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap ${
-            isOpen ? "rounded-[28px]" : "rounded-full"
-          } ${
+          className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 text-white shadow-sm backdrop-blur-xl transition-[background-color,border-color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
             pastHero
               ? "border-ink/10 bg-black/30"
               : isOpen
@@ -166,7 +164,7 @@ export default function SiteHeader() {
                 <Link
                   href="/chapters"
                   onClick={() => setIsOpen(false)}
-                  className="mt-2 rounded-full bg-deep-blue px-5 py-3 text-center font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+                  className="mt-2 rounded-full bg-cream hover:bg-deep-blue px-5 py-3 text-center font-semibold text-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
                 >
                   Explore Chapters
                 </Link>
