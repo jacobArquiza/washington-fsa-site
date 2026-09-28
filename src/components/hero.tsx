@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type HeroProps = {
   video: string;
   subtitle: string;
@@ -35,7 +37,7 @@ export default function Hero({
             {title}
           </h1>
           <button className="mt-6 min-h-11 rounded-full bg-cream px-7 py-3 text-base font-semibold text-ink transition hover:bg-deep-blue hover:text-ivory md:mt-4">
-            {buttonText}
+            <Link href="/chapters">{buttonText}</Link>
           </button>
         </div>
       </div>

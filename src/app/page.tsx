@@ -1,5 +1,6 @@
 import Hero from "@/components/hero";
 import Mission from "@/components/mission";
+import ChaptersOverview from "@/components/chapters-overview";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         buttonText="Find Your Chapter"
       />
       <Mission />
+      <ChaptersOverview />
     </main>
   );
 }

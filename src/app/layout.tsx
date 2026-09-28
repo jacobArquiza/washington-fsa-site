@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Newsreader } from "next/font/google";
 import SiteHeader from "@/components/site-header";
 import SmoothScroll from "@/components/smooth-scroll";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -24,10 +25,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${manrope.variable} ${newsreader.variable} antialiased`}
     >
-      <SmoothScroll />
-      <body className="min-h-full">
+      <body className="min-h-screen">
+        <SmoothScroll />
         <SiteHeader />
         {children}
       </body>

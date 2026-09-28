@@ -41,7 +41,7 @@ export default function Mission() {
     <section
       id="mission"
       aria-labelledby="mission-title"
-      className="relative isolate min-h-screen overflow-hidden bg-cream px-4 py-16 sm:px-6 md:px-12"
+      className="relative isolate min-h-screen overflow-x-clip bg-cream px-4 py-16 sm:px-6 md:px-12"
     >
       <div className="mx-auto grid w-full max-w-[1840px] items-start gap-8 md:gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-[7vw]">
         <div className="min-w-0">
