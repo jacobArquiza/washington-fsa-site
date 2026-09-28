@@ -1,4 +1,5 @@
 import Hero from "@/components/hero";
+import Mission from "@/components/mission";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         title="Connecting WA through community"
         buttonText="Find Your Chapter"
       />
+      <Mission />
     </main>
   );
 }

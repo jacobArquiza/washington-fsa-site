@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Newsreader } from "next/font/google";
 import SiteHeader from "@/components/site-header";
+import SmoothScroll from "@/components/smooth-scroll";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${manrope.variable} ${newsreader.variable} h-full antialiased`}
     >
+      <SmoothScroll />
       <body className="min-h-full">
         <SiteHeader />
         {children}
