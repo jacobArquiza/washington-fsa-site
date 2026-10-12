@@ -16,6 +16,7 @@ export default function SiteHeader() {
   const [pastHero, setPastHero] = useState(false);
   const pathname = usePathname();
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const lightSurface = pathname !== "/" || pastHero;
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -62,18 +63,18 @@ export default function SiteHeader() {
       <div className="mx-auto w-full max-w-[1000px] lg:w-[90%]">
         <nav
           aria-label="Primary navigation"
-          className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 text-white shadow-sm backdrop-blur-xl transition-[background-color,border-color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
-            pastHero
-              ? "border-ink/10 bg-deep-blue"
+          className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 shadow-sm backdrop-blur-xl transition-[background-color,border-color,color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
+            lightSurface
+              ? "border-ink/15 bg-ivory/85 text-ink"
               : isOpen
-                ? "border-white/30 bg-deep-blue"
-                : "border-white/30 bg-deep-blue/80"
+                ? "border-white/30 bg-black/40 text-white"
+                : "border-white/30 bg-white/5 text-white"
           }`}
         >
           <Link
             href="/"
             aria-label="WFSA home"
-            className="rounded-sm font-semibold tracking-[0.18em] text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+            className="rounded-sm font-semibold tracking-[0.18em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
           >
             WFSA
           </Link>
@@ -114,7 +115,7 @@ export default function SiteHeader() {
               isOpen ? "Close navigation menu" : "Open navigation menu"
             }
             onClick={() => setIsOpen((open) => !open)}
-            className="relative flex size-11 shrink-0 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white shadow-sm transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue motion-reduce:transition-none lg:hidden"
+            className="relative flex size-11 shrink-0 items-center justify-center rounded-xl border border-current/25 bg-current/5 shadow-sm transition-colors hover:bg-current/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue motion-reduce:transition-none lg:hidden"
           >
             <span className="relative size-5">
               <svg
@@ -159,14 +160,14 @@ export default function SiteHeader() {
             }`}
           >
             <div className="min-h-0 overflow-hidden">
-              <div className="flex max-h-[calc(100svh-7rem)] flex-col gap-1 overflow-y-auto border-t border-white/20 pt-3 pb-2">
+              <div className="flex max-h-[calc(100svh-7rem)] flex-col gap-1 overflow-y-auto border-t border-current/20 pt-3 pb-2">
                 {navigation.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
                     aria-current={pathname === item.href ? "page" : undefined}
                     onClick={() => setIsOpen(false)}
-                    className="rounded-xl px-4 py-3 font-medium transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue"
+                    className="rounded-xl px-4 py-3 font-medium transition-colors hover:bg-current/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue"
                   >
                     {item.label}
                   </Link>

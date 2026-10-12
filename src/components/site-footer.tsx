@@ -39,7 +39,7 @@ export default function SiteFooter() {
         </div>
         <p
           aria-hidden="true"
-          className="mt-14 select-none font-display text-[clamp(6rem,23vw,22rem)] leading-[0.85] tracking-[-0.055em]"
+          className="mt-10 select-none whitespace-nowrap font-display text-[clamp(2.75rem,8vw,3.5rem)] leading-none md:text-[clamp(5rem,6.5vw,6rem)] tracking-[-0.055em]"
         >
           WFSA
         </p>
@@ -52,6 +52,7 @@ export default function SiteFooter() {
           </div>
           <a
             href="#top"
+            data-scroll-top
             className="inline-flex min-h-11 w-fit items-center gap-3 rounded-full border border-cream/40 px-5 text-sm transition-colors hover:bg-cream hover:text-deep-blue"
           >
             Back to top <span aria-hidden="true">↑</span>
