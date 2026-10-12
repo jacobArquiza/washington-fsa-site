@@ -18,6 +18,7 @@
   --color-foreground: var(--foreground);
 
   --color-cream: var(--cream);
+  --color-dark-cream: var(--dark-cream);
   --color-ivory: var(--ivory);
   --color-ink: var(--ink);
   --color-deep-blue: var(--deep-blue);
@@ -38,4 +39,217 @@ body {
   .chapters-carousel-bleed {
     margin-left: calc(-1 * max(48px, calc(50vw - 720px)));
   }
+}
+
+@layer components {
+  .section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em];
+  }
+  .pill-link {
+    @apply inline-flex min-h-11 items-center justify-center gap-3 rounded-full border border-ink/30 px-6 py-3 text-sm font-semibold transition-colors hover:bg-deep-blue hover:text-cream;
+  }
+}
+
+html {
+  scroll-padding-top: 7rem;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+#hero :where(a, button):focus-visible,
+.chapters-carousel-bleed button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--ink);
+  padding: 0.75rem 1.5rem;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+header :where(a, button):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Shared alpha masks give both decorative maps the same restrained warm tint. */
+.section-motif {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background-color: var(--red);
+  opacity: 0.075;
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+/* This fixed-height decorative frame never follows the animated drawer height. */
+.mission-motif-anchor {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 28rem;
+  pointer-events: none;
+}
+.mission-motif {
+  mask-image: url("/hero/philippines.svg");
+  aspect-ratio: 748 / 945;
+  width: min(100%, 34rem);
+}
+/* Static ancestors anchor the mask to the outer section. To restore chart-local
+   placement, make this wrapper relative/isolated and adjust the mask width below. */
+.leadership-motif-anchor {
+  position: static;
+}
+.leadership-motif {
+  mask-image: url("/hero/washington.svg");
+  aspect-ratio: 1;
+  width: calc(100% - 1rem);
+  opacity: 0.06;
+}
+@media (min-width: 1024px) {
+  .leadership-motif {
+    width: min(100%, 90rem);
+  }
+}
+
+/* The ordered tiers and named role list describe the hierarchy without color or lines. */
+.org-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: var(--ink);
+}
+.org-level {
+  position: relative;
+  min-width: 0;
+}
+.org-level:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  height: 2rem;
+  border-left: 1px solid color-mix(in srgb, var(--deep-blue) 40%, transparent);
+}
+.org-node {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  margin-inline: auto;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-radius: 0.75rem;
+  background: var(--cream);
+  padding: 1.25rem;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+.org-person-name {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.org-role-title {
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.org-level-title {
+  font-family: var(--font-newsreader), serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+.org-level[data-tier="commissioner"] .org-node {
+  background: var(--deep-blue);
+  border-color: var(--deep-blue);
+  color: var(--ivory);
+  padding-block: 1.5rem;
+}
+.org-level[data-tier="commissioner"] .org-person-name {
+  font-size: 1.5rem;
+}
+.org-executive-group {
+  max-width: none;
+  background: var(--ivory);
+}
+.org-branches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.875rem;
+  margin-top: 1.25rem;
+}
+.org-branch {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+.org-officer-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-radius: 0.5rem;
+  background: var(--cream);
+  padding: 1rem 0.75rem;
+}
+.org-level[data-tier="regional-senate"] .org-node {
+  background: var(--ivory);
+}
+.org-level[data-tier="general-body"] .org-node {
+  background: color-mix(in srgb, var(--cream) 60%, var(--ivory));
+}
+@media (min-width: 640px) {
+  .org-branch {
+    flex-basis: calc((100% - 0.875rem) / 2);
+  }
+}
+@media (min-width: 1280px) {
+  .org-branch {
+    flex-basis: calc((100% - 1.75rem) / 3);
+  }
+}
+
+/* The seven dates fit a 375px viewport; focus stays inside narrow cells. */
+.calendar-date:focus-visible {
+  outline-offset: -3px;
+}
+
+.events-calendar button {
+  transition:
+    background-color 150ms,
+    color 150ms;
 }

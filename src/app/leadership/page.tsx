@@ -1,12 +1,18 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-cream px-4 pb-20 pt-36 sm:px-6 md:px-12">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen bg-cream px-4 pb-20 pt-36 sm:px-6 md:px-12"
+    >
       <div className="mx-auto max-w-[1440px]">
         <h1 className="font-display text-5xl text-ink sm:text-7xl">
           Leadership
         </h1>
         <p className="mt-6 max-w-xl text-lg text-ink/80">
-          Our full leadership overview is coming soon.
+          Our student leaders help chapters connect, collaborate, and grow
+          across Washington. The current officer roster will be shared here once
+          it is confirmed.
         </p>
       </div>
     </main>

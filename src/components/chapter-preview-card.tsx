@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ChapterPreview } from "@/data/chapter-previews";
+import { formatJoinMonth, type ChapterPreview } from "@/data/chapter-previews";
 
 export default function ChapterPreviewCard({
   chapter,
@@ -16,11 +16,13 @@ export default function ChapterPreviewCard({
             src={chapter.image}
             alt={chapter.imageAlt ?? ""}
             fill
-            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 55vw, 38vw"
+            sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) 42vw, 30vw"
+            loading="lazy"
+            style={{ objectPosition: chapter.imagePosition ?? "center" }}
             className="object-cover"
           />
         ) : (
-          <div className="flex h-full items-end bg-gradient-to-br from-[#a9c6d7] via-[#d7e5e6] to-[#91aab6] p-5">
+          <div className="flex h-full items-end bg-dark-cream p-5">
             <span className="font-display text-5xl text-deep-blue/70 sm:text-6xl">
               WFSA
             </span>
@@ -30,7 +32,7 @@ export default function ChapterPreviewCard({
       <CardContent className="flex flex-1 flex-col px-2 pb-3 pt-3 sm:px-3">
         <div className="flex items-start justify-between gap-2">
           <p className="text-[10px] font-bold tracking-wide sm:text-xs">
-            {chapter.eyebrow}
+            Joined {formatJoinMonth(chapter.joinMonth)}
           </p>
           {chapter.href && (
             <Link
@@ -41,19 +43,24 @@ export default function ChapterPreviewCard({
             </Link>
           )}
         </div>
-        <h3 className="mt-1 font-display text-2xl font-semibold leading-tight sm:text-3xl">
-          {chapter.title}
+        <h3 className="mt-1 break-words font-display text-2xl font-semibold leading-tight sm:text-3xl">
+          {chapter.schoolName}
         </h3>
-        {chapter.organizations ? (
+        {chapter.clubs.length > 0 ? (
           <div className="mt-3 text-sm leading-snug">
-            <p className="font-semibold">Participating Organizations:</p>
+            <p className="font-semibold">Affiliated clubs:</p>
             <ul className="mt-1 space-y-1">
-              {chapter.organizations.map((organization) => (
+              {chapter.clubs.map((organization) => (
                 <li key={organization}>{organization}</li>
               ))}
             </ul>
           </div>
         ) : (
+          <p className="mt-3 text-sm leading-snug text-ink/75">
+            Club details forthcoming
+          </p>
+        )}
+        {chapter.description && (
           <p className="mt-3 text-sm leading-snug">{chapter.description}</p>
         )}
       </CardContent>

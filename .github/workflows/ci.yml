@@ -35,6 +35,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Calendar tests
+        run: npm test
+
       - name: Check formatting
         run: npm run format:check
 

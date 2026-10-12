@@ -68,11 +68,15 @@ function Carousel({
   }, []);
 
   const scrollPrev = React.useCallback(() => {
-    api?.scrollPrev();
+    api?.scrollPrev(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    );
   }, [api]);
 
   const scrollNext = React.useCallback(() => {
-    api?.scrollNext();
+    api?.scrollNext(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    );
   }, [api]);
 
   const handleKeyDown = React.useCallback(

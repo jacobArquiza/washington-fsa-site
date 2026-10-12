@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import * as Accordion from "@radix-ui/react-accordion";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 type MissionCardProps = {
   value: string;
@@ -17,9 +17,14 @@ export default function MissionCard({
   icon,
   isActive,
 }: MissionCardProps) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <Accordion.Item value={value} asChild>
-      <motion.article layout className="relative px-3 py-4 sm:px-6">
+      <motion.article
+        layout
+        className={`relative rounded-xl px-3 py-4 transition-colors duration-300 focus-within:bg-cream motion-reduce:transition-none sm:px-6 ${isActive ? "bg-cream" : "bg-transparent"}`}
+      >
         {isActive && (
           <motion.div
             layoutId="active-mission-card"
@@ -31,7 +36,7 @@ export default function MissionCard({
           <Accordion.Trigger asChild>
             <motion.button
               type="button"
-              whileTap={{ scale: 0.985 }}
+              whileTap={reducedMotion ? undefined : { scale: 0.985 }}
               className="flex min-h-12 w-full items-center gap-3 text-left font-display text-lg text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-4 focus-visible:ring-offset-cream sm:gap-4 sm:text-2xl lg:text-3xl"
             >
               {icon}
@@ -45,6 +50,7 @@ export default function MissionCard({
             <Accordion.Content forceMount asChild>
               <motion.div
                 key="content"
+                transition={reducedMotion ? { duration: 0 } : undefined}
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}

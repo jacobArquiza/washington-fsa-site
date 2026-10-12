@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const navigation = [
@@ -13,12 +13,29 @@ const navigation = [
 
 export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const [pastHero, setPastHero] = useState(false);
+  const [scrollState, setScrollState] = useState({
+    pathname: "/",
+    pastHero: false,
+  });
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const pastHero =
+    pathname !== "/" ||
+    (scrollState.pathname === pathname && scrollState.pastHero);
+  const chapterCtaColors = pastHero
+    ? "bg-deep-blue text-white hover:opacity-90"
+    : "bg-cream text-black hover:bg-deep-blue hover:text-white hover:opacity-90";
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (
+        event.key === "Escape" &&
+        (document
+          .getElementById("mobile-navigation")
+          ?.contains(document.activeElement) ||
+          document.activeElement === toggleRef.current)
+      ) {
+        toggleRef.current?.focus();
         setIsOpen(false);
       }
     }
@@ -35,7 +52,11 @@ export default function SiteHeader() {
         ? window.scrollY >= mission.offsetTop - 80
         : true;
 
-      setPastHero(hasPassedHero);
+      setScrollState((previous) =>
+        previous.pathname === pathname && previous.pastHero === hasPassedHero
+          ? previous
+          : { pathname, pastHero: hasPassedHero },
+      );
     }
 
     const frameId = window.requestAnimationFrame(updateNavbar);
@@ -54,18 +75,18 @@ export default function SiteHeader() {
       <div className="mx-auto w-full max-w-[1000px] lg:w-[90%]">
         <nav
           aria-label="Primary navigation"
-          className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 text-white shadow-sm backdrop-blur-xl transition-[background-color,border-color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
+          className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 shadow-sm backdrop-blur-xl transition-[background-color,border-color,color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
             pastHero
-              ? "border-ink/10 bg-black/30"
+              ? "border-ink/10 bg-black/30 text-white"
               : isOpen
-                ? "border-white/30 bg-black/40"
-                : "border-white/30 bg-white/5"
+                ? "border-white/30 bg-black/40 text-white"
+                : "border-white/30 bg-white/5 text-white"
           }`}
         >
           <Link
             href="/"
             aria-label="WFSA home"
-            className="rounded-sm font-semibold tracking-[0.18em] text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+            className="rounded-sm font-semibold tracking-[0.18em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
           >
             WFSA
           </Link>
@@ -78,6 +99,7 @@ export default function SiteHeader() {
                 <Link
                   key={item.label}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={`text-sm font-medium ${
                     isActive ? "underline underline-offset-4" : ""
                   }`}
@@ -89,13 +111,14 @@ export default function SiteHeader() {
 
             <Link
               href="/chapters"
-              className="rounded-full px-5 py-2.5 bg-cream hover:bg-deep-blue text-black hover:text-white hover:opacity-90 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+              className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-[background-color,color,opacity] duration-300 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${chapterCtaColors}`}
             >
               Explore Chapters
             </Link>
           </div>
 
           <button
+            ref={toggleRef}
             id="mobile-navigation-toggle"
             type="button"
             aria-expanded={isOpen}
@@ -154,6 +177,7 @@ export default function SiteHeader() {
                   <Link
                     key={item.label}
                     href={item.href}
+                    aria-current={pathname === item.href ? "page" : undefined}
                     onClick={() => setIsOpen(false)}
                     className="rounded-xl px-4 py-3 font-medium transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue"
                   >
@@ -164,7 +188,7 @@ export default function SiteHeader() {
                 <Link
                   href="/chapters"
                   onClick={() => setIsOpen(false)}
-                  className="mt-2 rounded-full bg-cream hover:bg-deep-blue px-5 py-3 text-center font-semibold text-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+                  className={`mt-2 rounded-full px-5 py-3 text-center font-semibold transition-[background-color,color,opacity] duration-300 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${chapterCtaColors}`}
                 >
                   Explore Chapters
                 </Link>
