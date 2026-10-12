@@ -159,11 +159,14 @@ header :where(a, button):focus-visible {
   background: var(--ivory);
 }
 .org-branches {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.875rem;
   margin-top: 1.25rem;
 }
 .org-branch {
+  flex: 0 0 100%;
   min-width: 0;
 }
 .org-officer-node {
@@ -185,13 +188,13 @@ header :where(a, button):focus-visible {
   background: color-mix(in srgb, var(--cream) 60%, var(--ivory));
 }
 @media (min-width: 640px) {
-  .org-branches {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .org-branch {
+    flex-basis: calc((100% - 0.875rem) / 2);
   }
 }
 @media (min-width: 1280px) {
-  .org-branches {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .org-branch {
+    flex-basis: calc((100% - 1.75rem) / 3);
   }
 }
 
