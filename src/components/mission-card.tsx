@@ -21,7 +21,10 @@ export default function MissionCard({
 
   return (
     <Accordion.Item value={value} asChild>
-      <motion.article layout className="relative px-3 py-4 sm:px-6">
+      <motion.article
+        layout
+        className="relative rounded-xl bg-cream px-3 py-4 sm:px-6"
+      >
         {isActive && (
           <motion.div
             layoutId="active-mission-card"
