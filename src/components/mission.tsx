@@ -15,7 +15,7 @@ const missionPillars: MissionPillar[] = [
   {
     title: "Build community",
     description:
-      "Create a welcoming statewide network where Filipino students can find belonging, support, and people who feel like home.",
+      "Create a welcoming statewide network where Asian American and Pacific Islander students can find belonging, support, and a community that feels like home.",
   },
   {
     title: "Strengthen connection",
@@ -25,7 +25,7 @@ const missionPillars: MissionPillar[] = [
   {
     title: "Celebrate culture",
     description:
-      "Honor Filipino stories, traditions, and identities while making space for every student to express their own.",
+      "Celebrate the diverse cultures, stories, and identities of AAPI communities while honoring the Filipino roots that brought our alliance together.",
   },
   {
     title: "Grow future leaders",

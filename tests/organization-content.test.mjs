@@ -431,3 +431,65 @@ test("chapter cards retain lazy Next Image sizing, configurable crop position, a
   assert.match(fallback, /WFSA/);
   assert.doesNotMatch(fallback, /<img/);
 });
+
+test("public audience copy includes AAPI communities while retaining WFSA's Filipino roots and official name", () => {
+  const copy = (file) =>
+    fs
+      .readFileSync(new URL(`../src/${file}`, import.meta.url), "utf8")
+      .replace(/\s+/g, " ");
+  const mission = copy("components/mission.tsx");
+  assert.ok(
+    mission.includes(
+      "Create a welcoming statewide network where Asian American and Pacific Islander students can find belonging, support, and a community that feels like home.",
+    ),
+  );
+  assert.ok(
+    mission.includes(
+      "Celebrate the diverse cultures, stories, and identities of AAPI communities while honoring the Filipino roots that brought our alliance together.",
+    ),
+  );
+  assert.ok(
+    mission.includes(
+      "Bring chapters together through shared experiences, collaboration, and opportunities to learn from one another.",
+    ),
+  );
+  assert.ok(
+    mission.includes(
+      "Equip students with the confidence, relationships, and skills to lead both on campus and beyond graduation.",
+    ),
+  );
+  const chaptersCopy = copy("components/chapters-overview.tsx");
+  assert.ok(
+    chaptersCopy.includes(
+      "Our chapters connect AAPI student organizations across Washington. Explore the schools and communities that make up our growing statewide network.",
+    ),
+  );
+  const leadershipCopy = copy("components/leadership-overview.tsx");
+  assert.ok(
+    leadershipCopy.includes(
+      "See how student leadership connects our statewide alliance, campus chapters, and AAPI communities across Washington.",
+    ),
+  );
+  const footer = copy("components/site-footer.tsx");
+  assert.ok(
+    footer.includes(
+      "Rooted in Filipino heritage, the Washington Filipino Student Alliance connects AAPI student communities across Washington through culture, collaboration, and student leadership.",
+    ),
+  );
+  assert.equal(
+    (footer.match(/Washington Filipino Student Alliance/g) || []).length,
+    2,
+  );
+  const layout = copy("app/layout.tsx");
+  assert.ok(layout.includes('title: "Washington Filipino Student Alliance"'));
+  assert.ok(
+    layout.includes(
+      "Connecting Asian American and Pacific Islander (AAPI) student communities across Washington through culture, collaboration, and leadership.",
+    ),
+  );
+  for (const source of [mission, chaptersCopy, leadershipCopy, footer, layout])
+    assert.doesNotMatch(
+      source,
+      /where Filipino students|connects Filipino student|Filipino communities across|Honor Filipino stories/,
+    );
+});

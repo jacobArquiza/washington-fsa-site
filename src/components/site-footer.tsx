@@ -17,9 +17,9 @@ export default function SiteFooter() {
               Stay connected.
             </h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-cream/85 sm:text-base">
-              Washington Filipino Student Alliance connects Filipino student
-              communities across Washington through culture, collaboration, and
-              student leadership.
+              Rooted in Filipino heritage, the Washington Filipino Student
+              Alliance connects AAPI student communities across Washington
+              through culture, collaboration, and student leadership.
             </p>
           </div>
           <nav
