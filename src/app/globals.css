@@ -276,3 +276,14 @@ header :where(a, button):focus-visible {
     opacity: 0.3;
   }
 }
+
+/* The seven dates fit a 375px viewport; focus stays inside narrow cells. */
+.calendar-date:focus-visible {
+  outline-offset: -3px;
+}
+
+.events-calendar button {
+  transition:
+    background-color 150ms,
+    color 150ms;
+}

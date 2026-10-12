@@ -13,10 +13,15 @@ const navigation = [
 
 export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
-  const [pastHero, setPastHero] = useState(false);
+  const [scrollState, setScrollState] = useState({
+    pathname: "/",
+    pastHero: false,
+  });
   const pathname = usePathname();
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const lightSurface = pathname !== "/" || pastHero;
+  const lightSurface =
+    pathname !== "/" ||
+    (scrollState.pathname === pathname && scrollState.pastHero);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -44,7 +49,11 @@ export default function SiteHeader() {
         ? window.scrollY >= mission.offsetTop - 80
         : true;
 
-      setPastHero(hasPassedHero);
+      setScrollState((previous) =>
+        previous.pathname === pathname && previous.pastHero === hasPassedHero
+          ? previous
+          : { pathname, pastHero: hasPassedHero },
+      );
     }
 
     const frameId = window.requestAnimationFrame(updateNavbar);

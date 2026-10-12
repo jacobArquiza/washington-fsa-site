@@ -13,7 +13,7 @@ Based on the latest fetched `main`, commit `877de1b`, which incorporates depende
 - **Hero:** preserve video, headline, and chapter CTA; replace nested button/link with one Link. Provide a branded poster, readable overlay, explicit pause/play control, codec selection, and static fallback when playback fails. Reduced-motion visitors receive the poster without automatic video loading. Mobile retains viewport-height cropping.
 - **Mission:** retain the accordion, pillars, and animations; finish the right column with a deep-blue, gold-accented typography composition. Align the section to the 1440px container and stack the composition below the accordion on mobile. Suppress tap/height motion under reduced-motion preferences.
 - **Chapters:** retain the blue carousel, looping preview set, and existing content. Add clear slide/control labels, 44px control targets, and reduced-motion handling for scroll and blur effects. The counter continues to report three unique previews rather than nine repeated slides.
-- **Events:** add the editorial preview after Chapters, with a cream/red brand composition and designed empty state. Support zero, one, or multiple confirmed events; filter invalid/past dates, sort chronologically, and show at most three. Display date, time, year, and timezone. Render optional location, description, image, and verified destination. Refresh the homepage hourly. The CTA accurately describes the future-events placeholder.
+- **Events:** replace the promotional composition with a functional shared monthly calendar on the homepage and `/events`. Preserve the editorial heading; support previous/next month, Washington-local today, date selection, event markers, multiple and spanning events, and intentional empty states. Preserve selections across navigation. Both views use the typed date/time dataset and the same timezone-aware logic. The homepage's default upcoming panel shows three events; selected-date details show all matches. The full page provides the expanded listing. No production records are invented.
 - **Leadership:** retain the editorial introduction and warm dark cream, with a typed statewide organization chart: Commissioner → Executive Team (Vice President, PR, Finance, Cultural Chiefs) → Regional Senate (two representatives per chapter) → Campus Chapter Officers → General Body. CSS connectors show horizontal executive branches from tablet upward and a vertical list on mobile; ordered/nested lists preserve meaning without the connectors. Commissioner terminology is visibly flagged for confirmation, with no individual assigned to that title. The leadership CTA remains functional.
 - **Footer:** add deep-blue global navigation, “Stay connected.”, organization description/name, restrained WFSA wordmark (44–56px mobile, 80–96px desktop), current build-year copyright, and a keyboard-accessible back-to-top link on all public routes. Its enhanced click handler uses the existing Lenis instance; reduced motion scrolls immediately. No duplicate instance, hash navigation, or competing browser animation is introduced. Focus returns to the main content after scrolling.
 - **Shared accessibility:** add a skip link and main targets on every public route, visible focus outlines, current-page navigation semantics, higher-contrast navigation backgrounds, and Escape focus recovery for the mobile menu. Respect live reduced-motion changes in smooth scrolling and video playback.
@@ -23,6 +23,10 @@ Based on the latest fetched `main`, commit `877de1b`, which incorporates depende
 Created:
 
 - `src/components/events-overview.tsx`
+- `src/components/events-calendar.tsx`
+- `src/lib/event-calendar.ts`
+- `tests/event-calendar.test.mjs`
+- `docs/events-calendar.md`
 - `src/components/leadership-overview.tsx`
 - `src/components/organization-chart.tsx`
 - `src/components/site-footer.tsx`
@@ -41,7 +45,7 @@ Modified:
 
 ## Content maintenance
 
-Add confirmed public events to `src/data/events.ts`. Each needs a stable ID, title, offset-bearing ISO 8601 `startsAt` (Z or ±HH:MM), and an IANA `timeZone`. Add only confirmed metadata and verified links. Prefer local approved images with descriptive alt text. The first available upcoming-event image supplies the large editorial image; otherwise the branded composition remains. Invalid dates/timezones are omitted. Hourly regeneration means a just-started event may remain visible for up to an hour, or until the next request regenerates the page.
+Add approved events to `src/data/events.ts` using `startDate`/`endDate` (`YYYY-MM-DD`), optional `startTime`/`endTime` (`HH:mm`), and an IANA `timeZone`, normally `America/Los_Angeles`. Stable ID and confirmed title are required. Only verified locations, descriptions, and registration URLs belong in public records. Draft/cancelled/invalid records are omitted. See [events-calendar.md](events-calendar.md) for exact date semantics, DST handling, keyboard behavior, and deployment instructions. The shared calendar automatically places markers and renders details without component changes.
 
 Maintain chart levels and executive roles in `organizationHierarchy` in `src/data/leadership.ts`. Confirm the Commissioner/Executive Director terminology before publication. The homepage chart uses structural roles, not officer records. The existing officer approval helpers remain available for future directory work. Add officers to `src/data/leadership.ts` only after confirming the current roster and publication approval. Each needs a stable ID, name, role, display order, `publicationStatus`, and `isCurrent`. The approval helper returns only `publicationStatus: "approved"` plus `isCurrent: true` records. The provisional personal names in the specification are intentionally absent from committed production content. Unresolved organizational titles require client review; Commissioner and Executive Director are not equated.
 
@@ -50,7 +54,7 @@ Pending client content:
 - Confirmed upcoming event titles, dates/times, locations, and destination links.
 - Current approved officer names and exact titles.
 - Approved contact and social destinations. None were fabricated.
-- Approved community/event still photography. Local assets contain the existing hero video, logo, and Mariner school entrance photo, but no suitable community stills for Mission or Events. Brand compositions complete these sections without stock or generated photography. The Mariner photo remains in Chapters without unnecessary reuse.
+- Approved community/event still photography. Local assets contain the existing hero video, logo, and Mariner school entrance photo, but no suitable community stills for Mission or Events. Mission uses a branded composition; Events now uses its functional calendar rather than photography. The Mariner photo remains in Chapters without unnecessary reuse.
 
 ## Verification
 
@@ -93,3 +97,15 @@ No automatic issue-closing keywords are used because these issues include pendin
 Follow-up verification: lint, typecheck, and format check passed. The requested default `npm run build` reproduced the Turbopack internal-port restriction; the final `npx next build --webpack` passed separately, including static generation of all public routes. Temporary mocked scroll-controller assertions passed for one Lenis instance, smooth dispatch, reduced-motion immediate scroll, focus restoration, unrelated-link/modifier isolation, and listener cleanup. These assertions do not verify live animation or visual appearance.
 
 Final generated-HTML assertions passed for initial navbar glass on the homepage and secondary routes, one H1 per route, footer wordmark bounds and scroll target, all hierarchy labels, nested role-list semantics, and the terminology note. Built CSS includes the chart connector rules and tablet breakpoint. `git diff --check` passed. These checks verify output structure, not rendered layout or scroll states.
+
+## Shared events calendar follow-up
+
+- Add a real seven-column monthly calendar to both homepage and Events route using one implementation and one empty production dataset. Date-only values are never parsed in the visitor's local timezone. Timed records are resolved in their IANA timezone and displayed on Washington dates.
+- Use the existing Node/React/TypeScript tools for focused tests; add `npm test` to the existing QA command and GitHub quality job. No dependencies are added.
+- Preserve the prior glass-navbar, organizational-chart, reduced footer wordmark, and smooth Lenis controls. Improve the native scrolling fallback if Lenis cannot initialize.
+- Source review found no inflated root font, viewport override, or scaling hack. The prior footer outlier is already fixed, and the oversized Events promotional card is now removed. Overall browser zoom and rendered laptop scale remain unverified rather than attributed to a browser setting without evidence.
+- Commissioner versus Executive Director, Chief of Staff placement, current officers, and unnamed Cultural Chiefs remain client-review matters. No additional relationships or names are inferred.
+
+The final calendar follow-up also ties navbar boundary state to its route, preventing stale secondary-route scroll state from briefly carrying onto the hero. The new controller test exercises Lenis initialization failure/native fallback and live reduced-motion changes without claiming browser animation review.
+
+Final calendar QA: 18 focused tests passed under the default environment plus Honolulu and Tokyo visitor timezones. Lint, typecheck, format check, and whitespace checks passed. The requested default `npm run build` failed because Turbopack cannot bind its internal local port; the final supported webpack build passed separately. Calendar data/rendering and isolated interaction/controller behavior are verified automatically. Browser visual layout, real focus/scroll behavior, zoom settings, and CI/Vercel preview remain unverified. No missing event time is presented as a confirmed all-day duration.

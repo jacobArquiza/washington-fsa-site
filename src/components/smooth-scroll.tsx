@@ -9,14 +9,18 @@ export default function SmoothScroll() {
     let lenis: Lenis | undefined;
     const updateScrolling = () => {
       lenis?.destroy();
-      lenis = preference.matches
-        ? undefined
-        : new Lenis({
-            autoRaf: true,
-            allowNestedScroll: true,
-            duration: 1.1,
-            smoothWheel: true,
-          });
+      lenis = undefined;
+      if (preference.matches) return;
+      try {
+        lenis = new Lenis({
+          autoRaf: true,
+          allowNestedScroll: true,
+          duration: 1.1,
+          smoothWheel: true,
+        });
+      } catch {
+        // Back-to-top can still use native smooth scrolling.
+      }
     };
     const handleBackToTop = (event: MouseEvent) => {
       const target = event.target;
@@ -34,11 +38,15 @@ export default function SmoothScroll() {
       event.preventDefault();
       const focusStart = () =>
         document.getElementById("main-content")?.focus({ preventScroll: true });
-      if (preference.matches || !lenis) {
+      if (preference.matches) {
         window.scrollTo({ top: 0, behavior: "instant" });
         focusStart();
-      } else {
+      } else if (lenis) {
         lenis.scrollTo(0, { onComplete: focusStart });
+      } else {
+        // Native fallback only when the shared controller is unavailable.
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        focusStart();
       }
     };
     updateScrolling();

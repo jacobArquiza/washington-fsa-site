@@ -11,7 +11,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "qa": "npm run lint && npm run typecheck && npm run format:check && npm run build"
+    "qa": "npm run lint && npm run typecheck && npm test && npm run format:check && npm run build",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
