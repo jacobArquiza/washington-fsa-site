@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 type HeroProps = {
@@ -54,6 +55,7 @@ export default function Hero({
         aria-hidden="true"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onEmptied={() => setIsPlaying(false)}
         onError={() => {
           setHasFailed(true);
           setIsPlaying(false);
@@ -66,8 +68,8 @@ export default function Hero({
         className={`pointer-events-none absolute inset-0 h-full w-full border-0 object-cover blur-[1px] ${hasFailed ? "hidden" : ""}`}
       />
 
-      <div className="absolute inset-0 z-10 flex items-center bg-black/55 px-6 pt-16 sm:px-10 md:px-12 md:pt-0">
-        <div className="mx-auto w-full max-w-[1440px] min-w-0 text-white">
+      <div className="absolute inset-0 z-10 flex items-center bg-black/20 px-6 pt-16 sm:px-10 md:ml-12 md:bg-transparent md:px-12 md:pt-0">
+        <div className="w-full max-w-2xl min-w-0 text-white">
           <p className="mb-3 text-xs font-semibold tracking-[0.16em] uppercase sm:text-sm sm:tracking-[0.2em]">
             {subtitle}
           </p>
@@ -85,10 +87,13 @@ export default function Hero({
       {!hasFailed && (
         <button
           type="button"
+          aria-label={
+            isPlaying ? "Pause background video" : "Play background video"
+          }
           onClick={() => {
             const player = videoRef.current;
             if (!player) return;
-            if (isPlaying) player.pause();
+            if (!player.paused) player.pause();
             else {
               if (!player.getAttribute("src"))
                 player.src = player.canPlayType("video/webm")
@@ -97,9 +102,13 @@ export default function Hero({
               void player.play().catch(() => setIsPlaying(false));
             }
           }}
-          className="absolute bottom-6 right-6 z-20 min-h-11 rounded-full border border-white/60 bg-deep-blue/80 px-5 text-sm text-white"
+          className="absolute bottom-6 right-6 z-20 flex size-11 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
         >
-          {isPlaying ? "Pause background video" : "Play background video"}
+          {isPlaying ? (
+            <Pause aria-hidden="true" className="size-5" />
+          ) : (
+            <Play aria-hidden="true" className="size-5" />
+          )}
         </button>
       )}
     </section>
