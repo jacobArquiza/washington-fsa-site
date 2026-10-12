@@ -8,7 +8,6 @@ export default function LeadershipOverview() {
       aria-labelledby="leadership-title"
       className="relative isolate overflow-hidden bg-dark-cream px-4 py-16 sm:px-6 md:px-12 md:py-24"
     >
-      <span aria-hidden="true" className="section-motif leadership-motif" />
       <div className="relative z-10 mx-auto grid max-w-[1440px] items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div>
           <p className="section-eyebrow">Student leadership</p>
@@ -28,7 +27,12 @@ export default function LeadershipOverview() {
             About WFSA leadership <span aria-hidden="true">↗</span>
           </Link>
         </div>
-        <OrganizationChart />
+        <div className="relative isolate min-w-0">
+          <span aria-hidden="true" className="section-motif leadership-motif" />
+          <div className="relative z-10">
+            <OrganizationChart />
+          </div>
+        </div>
       </div>
     </section>
   );
