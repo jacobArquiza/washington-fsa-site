@@ -23,7 +23,7 @@ export default function MissionCard({
     <Accordion.Item value={value} asChild>
       <motion.article
         layout
-        className="relative rounded-xl bg-transparent px-3 py-4 transition-colors duration-300 focus-within:bg-cream motion-reduce:transition-none sm:px-6"
+        className={`relative rounded-xl px-3 py-4 transition-colors duration-300 focus-within:bg-cream motion-reduce:transition-none sm:px-6 ${isActive ? "bg-cream" : "bg-transparent"}`}
       >
         {isActive && (
           <motion.div
