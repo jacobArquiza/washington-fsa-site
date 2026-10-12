@@ -112,20 +112,33 @@ header :where(a, button):focus-visible {
   mask-position: center;
   mask-size: contain;
 }
+/* This fixed-height decorative frame never follows the animated drawer height. */
+.mission-motif-anchor {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 28rem;
+  pointer-events: none;
+}
 .mission-motif {
   mask-image: url("/hero/philippines.svg");
   aspect-ratio: 748 / 945;
   width: min(100%, 34rem);
 }
+/* Static ancestors anchor the mask to the outer section. To restore chart-local
+   placement, make this wrapper relative/isolated and adjust the mask width below. */
+.leadership-motif-anchor {
+  position: static;
+}
 .leadership-motif {
   mask-image: url("/hero/washington.svg");
   aspect-ratio: 1;
-  width: min(140%, calc(100vw - 1rem));
+  width: calc(100% - 1rem);
   opacity: 0.06;
 }
 @media (min-width: 1024px) {
   .leadership-motif {
-    width: clamp(48rem, 180%, 90rem);
+    width: min(100%, 90rem);
   }
 }
 

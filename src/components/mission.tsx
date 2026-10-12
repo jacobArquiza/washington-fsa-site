@@ -53,7 +53,9 @@ export default function Mission() {
           </h2>
 
           <div className="relative isolate mt-8 lg:mt-10">
-            <span aria-hidden="true" className="section-motif mission-motif" />
+            <div aria-hidden="true" className="mission-motif-anchor">
+              <span className="section-motif mission-motif" />
+            </div>
             <MotionConfig
               reducedMotion="user"
               transition={{ type: "spring", bounce: 0.18, duration: 0.45 }}

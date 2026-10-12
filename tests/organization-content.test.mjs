@@ -276,3 +276,78 @@ test("carousel counter responds to selected-snap changes and native wraparound",
   cleanups.forEach((cleanup) => cleanup());
   assert.equal(listeners.size, 0);
 });
+
+test("mission motif uses the same non-animated fixed frame across all four drawer states", () => {
+  const css = fs.readFileSync(
+    new URL("../src/app/globals.css", import.meta.url),
+    "utf8",
+  );
+  const frame = css.split(".mission-motif-anchor {")[1].split("}")[0];
+  assert.match(frame, /position: absolute/);
+  assert.match(frame, /top: 0/);
+  assert.match(frame, /height: 28rem/);
+  assert.doesNotMatch(frame, /transition|animation|transform|height:.*%/);
+  const wrapper = ({ children, ...props }) =>
+    React.createElement("div", props, children);
+  for (let index = 0; index < 4; index++) {
+    const Mission = load("../src/components/mission.tsx", {
+      react: { useState: () => [`mission-${index}`, () => {}] },
+      "@/components/mission-card": {
+        __esModule: true,
+        default: ({ title, isActive }) =>
+          React.createElement("article", { "data-active": isActive }, title),
+      },
+      "@radix-ui/react-accordion": {
+        Root: ({ children, className }) => wrapper({ children, className }),
+      },
+      "motion/react": { MotionConfig: ({ children }) => children },
+    }).default;
+    const html = renderToStaticMarkup(React.createElement(Mission));
+    assert.match(
+      html,
+      /<div aria-hidden="true" class="mission-motif-anchor"><span class="section-motif mission-motif"><\/span><\/div>/,
+    );
+    assert.match(html, /class="relative isolate mt-8 lg:mt-10"/);
+    assert.equal((html.match(/data-active="true"/g) || []).length, 1);
+    assert.equal((html.match(/<article/g) || []).length, 4);
+  }
+});
+
+test("Washington motif anchors to the full section with independent foreground layers", () => {
+  const Overview = load("../src/components/leadership-overview.tsx", {
+    "next/link": {
+      __esModule: true,
+      default: ({ children, ...props }) =>
+        React.createElement("a", props, children),
+    },
+    "@/components/organization-chart": {
+      __esModule: true,
+      default: () => React.createElement("figure", null, "Chart"),
+    },
+  }).default;
+  const html = renderToStaticMarkup(React.createElement(Overview));
+  assert.match(html, /class="relative isolate overflow-hidden bg-dark-cream/);
+  assert.match(html, /<div class="mx-auto grid/);
+  assert.match(
+    html,
+    /<div class="leadership-motif-anchor min-w-0"><span aria-hidden="true" class="section-motif leadership-motif"><\/span><div class="relative z-10"><figure>/,
+  );
+  assert.equal((html.match(/class="relative z-10"/g) || []).length, 2);
+  const css = fs.readFileSync(
+    new URL("../src/app/globals.css", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    css.split(".leadership-motif-anchor {")[1].split("}")[0],
+    /position: static/,
+  );
+  const shared = css.split(".section-motif {")[1].split("}")[0];
+  for (const rule of [
+    "top: 50%",
+    "left: 50%",
+    "translate(-50%, -50%)",
+    "pointer-events: none",
+    "mask-size: contain",
+  ])
+    assert.ok(shared.includes(rule));
+});
