@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -86,8 +87,17 @@ export default function SiteHeader() {
           <Link
             href="/"
             aria-label="WFSA home"
-            className="rounded-sm font-semibold tracking-[0.18em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+            className="inline-flex items-center gap-2.5 rounded-sm font-semibold tracking-[0.18em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
           >
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-ivory">
+              <Image
+                src="/branding/wfsa-logo.png"
+                alt=""
+                width={36}
+                height={36}
+                className="object-contain"
+              />
+            </span>
             WFSA
           </Link>
 

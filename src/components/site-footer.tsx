@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const navigation = [
   { label: "Home", href: "/" },
@@ -44,11 +45,22 @@ export default function SiteFooter() {
           WFSA
         </p>
         <div className="mt-8 flex flex-col gap-6 border-t border-cream/25 pt-7 text-xs leading-relaxed sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p>Washington Filipino Student Alliance</p>
-            <p className="mt-1 text-cream/75">
-              © {new Date().getFullYear()} WFSA. All rights reserved.
-            </p>
+          <div className="flex items-center gap-4">
+            <span className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-ivory">
+              <Image
+                src="/branding/wfsa-logo.png"
+                alt=""
+                width={60}
+                height={60}
+                className="object-contain"
+              />
+            </span>
+            <div>
+              <p>Washington Filipino Student Alliance</p>
+              <p className="mt-1 text-cream/75">
+                © {new Date().getFullYear()} WFSA. All rights reserved.
+              </p>
+            </div>
           </div>
           <a
             href="#top"
