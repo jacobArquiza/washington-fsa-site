@@ -22,6 +22,9 @@ export default function SiteHeader() {
   const lightSurface =
     pathname !== "/" ||
     (scrollState.pathname === pathname && scrollState.pastHero);
+  const chapterCtaColors = lightSurface
+    ? "bg-deep-blue text-white hover:opacity-90"
+    : "bg-cream text-black hover:bg-deep-blue hover:text-white hover:opacity-90";
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -108,7 +111,7 @@ export default function SiteHeader() {
 
             <Link
               href="/chapters"
-              className="rounded-full px-5 py-2.5 bg-cream hover:bg-deep-blue text-black hover:text-white hover:opacity-90 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+              className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-[background-color,color,opacity] duration-300 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${chapterCtaColors}`}
             >
               Explore Chapters
             </Link>
@@ -185,7 +188,7 @@ export default function SiteHeader() {
                 <Link
                   href="/chapters"
                   onClick={() => setIsOpen(false)}
-                  className="mt-2 rounded-full bg-cream hover:bg-deep-blue px-5 py-3 text-center font-semibold text-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+                  className={`mt-2 rounded-full px-5 py-3 text-center font-semibold transition-[background-color,color,opacity] duration-300 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue focus-visible:ring-offset-2 focus-visible:ring-offset-cream ${chapterCtaColors}`}
                 >
                   Explore Chapters
                 </Link>
