@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Newsreader } from "next/font/google";
 import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
 import SmoothScroll from "@/components/smooth-scroll";
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -27,10 +28,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${manrope.variable} ${newsreader.variable} antialiased`}
     >
-      <body className="min-h-screen">
+      <body id="top" className="min-h-screen">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <SmoothScroll />
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
