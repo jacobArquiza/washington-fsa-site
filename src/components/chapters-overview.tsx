@@ -47,9 +47,11 @@ export default function ChaptersOverview() {
     if (!viewport) return;
 
     const slides = api.slideNodes();
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let resetFrame: number | undefined;
 
     const updateTransition = () => {
+      if (preference.matches) return;
       if (resetFrame !== undefined) {
         cancelAnimationFrame(resetFrame);
         resetFrame = undefined;
@@ -140,7 +142,14 @@ export default function ChaptersOverview() {
 
         <Carousel
           setApi={setApi}
-          opts={{ align: "end", startIndex: 5, loop: true }}
+          opts={{
+            align: "end",
+            startIndex: 5,
+            loop: true,
+            breakpoints: {
+              "(prefers-reduced-motion: reduce)": { duration: 0 },
+            },
+          }}
           aria-label="Chapter previews"
           className="chapters-carousel-bleed min-w-0 md:order-1"
         >
@@ -148,6 +157,7 @@ export default function ChaptersOverview() {
             {carouselChapters.map((chapter, index) => (
               <CarouselItem
                 key={`${chapter.id}-${index}`}
+                aria-label={`${chapter.title}, ${(index % chapterPreviews.length) + 1} of ${chapterPreviews.length}`}
                 className="basis-full pl-0 transition-[filter,opacity] duration-500 ease-out motion-reduce:transition-none md:basis-[68%] md:pl-4 lg:basis-[43%]"
               >
                 <div className="mx-auto h-full w-[calc(100%-1rem)] md:w-full">
@@ -157,7 +167,10 @@ export default function ChaptersOverview() {
             ))}
           </CarouselContent>
           <div className="mt-4 flex items-center justify-center gap-3">
-            <CarouselPrevious className="static h-9 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-[#2050ad]">
+            <CarouselPrevious
+              aria-label="Previous chapter"
+              className="static h-11 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-[#2050ad]"
+            >
               Back
             </CarouselPrevious>
             <span
@@ -167,7 +180,10 @@ export default function ChaptersOverview() {
               {(activeIndex % chapterPreviews.length) + 1}/
               {chapterPreviews.length}
             </span>
-            <CarouselNext className="static h-9 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-[#2050ad]">
+            <CarouselNext
+              aria-label="Next chapter"
+              className="static h-11 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-[#2050ad]"
+            >
               Next
             </CarouselNext>
           </div>

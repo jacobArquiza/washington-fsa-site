@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const navigation = [
@@ -15,10 +15,18 @@ export default function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (
+        event.key === "Escape" &&
+        (document
+          .getElementById("mobile-navigation")
+          ?.contains(document.activeElement) ||
+          document.activeElement === toggleRef.current)
+      ) {
+        toggleRef.current?.focus();
         setIsOpen(false);
       }
     }
@@ -56,10 +64,10 @@ export default function SiteHeader() {
           aria-label="Primary navigation"
           className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 text-white shadow-sm backdrop-blur-xl transition-[background-color,border-color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
             pastHero
-              ? "border-ink/10 bg-black/30"
+              ? "border-ink/10 bg-deep-blue"
               : isOpen
-                ? "border-white/30 bg-black/40"
-                : "border-white/30 bg-white/5"
+                ? "border-white/30 bg-deep-blue"
+                : "border-white/30 bg-deep-blue/80"
           }`}
         >
           <Link
@@ -78,6 +86,7 @@ export default function SiteHeader() {
                 <Link
                   key={item.label}
                   href={item.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={`text-sm font-medium ${
                     isActive ? "underline underline-offset-4" : ""
                   }`}
@@ -96,6 +105,7 @@ export default function SiteHeader() {
           </div>
 
           <button
+            ref={toggleRef}
             id="mobile-navigation-toggle"
             type="button"
             aria-expanded={isOpen}
@@ -154,6 +164,7 @@ export default function SiteHeader() {
                   <Link
                     key={item.label}
                     href={item.href}
+                    aria-current={pathname === item.href ? "page" : undefined}
                     onClick={() => setIsOpen(false)}
                     className="rounded-xl px-4 py-3 font-medium transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-deep-blue"
                   >

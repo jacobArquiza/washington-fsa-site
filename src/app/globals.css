@@ -49,3 +49,46 @@ body {
     @apply inline-flex min-h-11 items-center justify-center gap-3 rounded-full border border-ink/30 px-6 py-3 text-sm font-semibold transition-colors hover:bg-deep-blue hover:text-cream;
   }
 }
+
+html {
+  scroll-padding-top: 7rem;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+#hero :where(a, button):focus-visible,
+header :where(a, button):focus-visible,
+.chapters-carousel-bleed button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--ink);
+  padding: 0.75rem 1.5rem;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

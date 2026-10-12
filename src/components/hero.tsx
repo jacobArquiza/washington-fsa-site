@@ -28,7 +28,6 @@ export default function Hero({
       if (preference.matches) {
         player.pause();
         player.removeAttribute("src");
-        player.querySelectorAll("source").forEach((source) => source.remove());
         player.load();
       } else {
         player.src = player.canPlayType("video/webm")
@@ -44,8 +43,9 @@ export default function Hero({
 
   return (
     <section
+      id="hero"
       aria-label="Welcome to WFSA"
-      className="relative isolate h-svh min-h-[520px] overflow-hidden bg-deep-blue"
+      className="relative isolate h-svh min-h-[520px] overflow-hidden bg-deep-blue bg-[url(/hero/wfsa-poster.svg)] bg-cover bg-center"
     >
       <video
         ref={videoRef}
@@ -63,13 +63,10 @@ export default function Hero({
         playsInline
         tabIndex={-1}
         disablePictureInPicture
-        className="pointer-events-none absolute inset-0 h-full w-full border-0 object-cover blur-[1px]"
-      >
-        <source src={`/hero/${video}.webm`} type="video/webm" />
-        <source src={`/hero/${video}.mp4`} type="video/mp4" />
-      </video>
+        className={`pointer-events-none absolute inset-0 h-full w-full border-0 object-cover blur-[1px] ${hasFailed ? "hidden" : ""}`}
+      />
 
-      <div className="absolute inset-0 z-10 flex items-center bg-black/35 px-6 pt-16 sm:px-10 md:px-12 md:pt-0">
+      <div className="absolute inset-0 z-10 flex items-center bg-black/55 px-6 pt-16 sm:px-10 md:px-12 md:pt-0">
         <div className="mx-auto w-full max-w-[1440px] min-w-0 text-white">
           <p className="mb-3 text-xs font-semibold tracking-[0.16em] uppercase sm:text-sm sm:tracking-[0.2em]">
             {subtitle}
@@ -94,7 +91,9 @@ export default function Hero({
             if (isPlaying) player.pause();
             else {
               if (!player.getAttribute("src"))
-                player.src = `/hero/${video}.webm`;
+                player.src = player.canPlayType("video/webm")
+                  ? `/hero/${video}.webm`
+                  : `/hero/${video}.mp4`;
               void player.play().catch(() => setIsPlaying(false));
             }
           }}
