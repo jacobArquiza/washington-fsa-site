@@ -6,7 +6,9 @@ export default function Home() {
           Leadership
         </h1>
         <p className="mt-6 max-w-xl text-lg text-ink/80">
-          Our full leadership overview is coming soon.
+          Our student leaders help chapters connect, collaborate, and grow
+          across Washington. The current officer roster will be shared here once
+          it is confirmed.
         </p>
       </div>
     </main>

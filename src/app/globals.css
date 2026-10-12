@@ -18,6 +18,7 @@
   --color-foreground: var(--foreground);
 
   --color-cream: var(--cream);
+  --color-dark-cream: var(--dark-cream);
   --color-ivory: var(--ivory);
   --color-ink: var(--ink);
   --color-deep-blue: var(--deep-blue);
@@ -37,5 +38,14 @@ body {
 @media (min-width: 768px) {
   .chapters-carousel-bleed {
     margin-left: calc(-1 * max(48px, calc(50vw - 720px)));
+  }
+}
+
+@layer components {
+  .section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em];
+  }
+  .pill-link {
+    @apply inline-flex min-h-11 items-center justify-center gap-3 rounded-full border border-ink/30 px-6 py-3 text-sm font-semibold transition-colors hover:bg-deep-blue hover:text-cream;
   }
 }

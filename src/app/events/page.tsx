@@ -4,8 +4,9 @@ export default function Home() {
       <div className="mx-auto max-w-[1440px]">
         <h1 className="font-display text-5xl text-ink sm:text-7xl">Events</h1>
         <p className="mt-6 max-w-xl text-lg text-ink/80">
-          Our full events directory is coming soon. Explore the events preview
-          on the home page in the meantime.
+          New events are on the way. Confirmed dates and details will appear
+          here when they are ready. Stay tuned for opportunities to connect,
+          celebrate, and build community across WFSA.
         </p>
       </div>
     </main>
