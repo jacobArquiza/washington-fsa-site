@@ -34,6 +34,6 @@ Shoreline College was formerly Shoreline Community College; its existing stable 
 
 Every school uses month-level `joinMonth: "2026-06"`, authorized by the founder. Labels are formatted directly from month/year; no exact joining day or timestamp is created.
 
-Maintain records in `src/data/chapter-previews.ts`, with Mariner first and remaining schools alphabetically ordered. Mariner alone uses its approved local image. No other school photographs, descriptions, or URLs have been invented. Stable IDs support a future directory.
+Maintain records in `src/data/chapter-previews.ts`, with Mariner first and remaining schools alphabetically ordered. All 21 schools use the supplied local building photographs, matched by filename without renaming or conversion. Descriptions and school URLs are not invented. See [chapter-photo-inventory.md](chapter-photo-inventory.md) for file mappings, embedded author/license clues, and unresolved publication permissions. Stable IDs support a future directory.
 
 The carousel maps the 21 records once and uses Embla's native loop. Its counter uses the selected logical snap and actual record count. Automated rendering and counter checks cover all cards and wraparound; live controls, swipe, keyboard behavior, and layout still require browser review at 375, 768, 1024, and 1440px.

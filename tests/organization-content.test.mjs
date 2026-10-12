@@ -67,16 +67,21 @@ test("chapter inventory has 21 unique schools, 22 approved affiliations, and mon
     assert.equal(chapters.formatJoinMonth(chapter.joinMonth), "June 2026");
     assert.equal(chapter.href, undefined);
     assert.equal(chapter.description, undefined);
-    if (chapter.image) {
-      assert.equal(chapter.id, "mariner");
-      assert.equal(chapter.image, "/chapters/mariner-high.jpg");
-      assert.ok(chapter.imageAlt);
-      assert.ok(
-        fs.existsSync(new URL(`../public${chapter.image}`, import.meta.url)),
-      );
-    }
+    const expectedStem =
+      chapter.id === "shoreline-community-college"
+        ? "shoreline-college"
+        : chapter.id;
+    assert.match(
+      chapter.image,
+      new RegExp(`^/chapters/${expectedStem}\\.(jpg|webp|png)$`),
+    );
+    assert.equal(chapter.imageAlt, `Exterior of ${chapter.schoolName}`);
+    assert.ok(
+      fs.existsSync(new URL(`../public${chapter.image}`, import.meta.url)),
+    );
   }
-  assert.equal(chapters.chapterPreviews.filter((x) => x.image).length, 1);
+  assert.equal(chapters.chapterPreviews.filter((x) => x.image).length, 21);
+  assert.equal(new Set(chapters.chapterPreviews.map((x) => x.image)).size, 21);
   assert.equal(
     chapters.chapterPreviews.filter((x) => !x.clubs.length).length,
     4,
@@ -194,6 +199,7 @@ test("carousel renders exactly 21 real cards with native looping and a logical 1
   }).default;
   const html = renderToStaticMarkup(React.createElement(Overview));
   assert.equal((html.match(/<h3/g) || []).length, 21);
+  assert.equal((html.match(/<img/g) || []).length, 21);
   assert.equal((html.match(/Joined June 2026/g) || []).length, 21);
   assert.equal((html.match(/Club details forthcoming/g) || []).length, 4);
   assert.match(html.replace(/<[^>]+>/g, ""), /1\/21/);
@@ -350,4 +356,78 @@ test("Washington motif anchors to the full section with independent foreground l
     "mask-size: contain",
   ])
     assert.ok(shared.includes(rule));
+});
+
+test("all 21 local chapter photos decode, have unique content, and support consistent cover crops", async () => {
+  const sharp = nodeRequire("sharp");
+  const { createHash } = nodeRequire("node:crypto");
+  const digests = new Set();
+  for (const chapter of chapters.chapterPreviews) {
+    const file = new URL(`../public${chapter.image}`, import.meta.url);
+    const bytes = fs.readFileSync(file);
+    const metadata = await sharp(bytes).metadata();
+    assert.ok(metadata.width > 0 && metadata.height > 0, chapter.schoolName);
+    assert.ok(["jpeg", "png", "webp"].includes(metadata.format));
+    digests.add(createHash("sha256").update(bytes).digest("hex"));
+    const crop = await sharp(bytes)
+      .rotate()
+      .resize(300, 200, { fit: "cover" })
+      .webp()
+      .toBuffer();
+    const result = await sharp(crop).metadata();
+    assert.equal(result.width, 300);
+    assert.equal(result.height, 200);
+  }
+  assert.equal(digests.size, 21);
+});
+
+test("chapter cards retain lazy Next Image sizing, configurable crop position, and branded fallback", () => {
+  const calls = [];
+  const wrapper = ({ children, className }) =>
+    React.createElement("div", { className }, children);
+  const Card = load("../src/components/chapter-preview-card.tsx", {
+    "@/data/chapter-previews": chapters,
+    "@/components/ui/card": { Card: wrapper, CardContent: wrapper },
+    "next/image": {
+      __esModule: true,
+      default: (props) => {
+        calls.push(props);
+        return React.createElement("img", { src: props.src, alt: props.alt });
+      },
+    },
+  }).default;
+  for (const chapter of chapters.chapterPreviews) {
+    const html = renderToStaticMarkup(React.createElement(Card, { chapter }));
+    assert.match(html, /aspect-\[1\.5\]/);
+    assert.ok(
+      html.includes(
+        renderToStaticMarkup(
+          React.createElement(React.Fragment, null, chapter.schoolName),
+        ),
+      ),
+    );
+    assert.ok(html.includes("Joined June 2026"));
+  }
+  assert.equal(calls.length, 21);
+  for (const props of calls) {
+    assert.equal(props.fill, true);
+    assert.equal(props.loading, "lazy");
+    assert.equal(props.priority, undefined);
+    assert.equal(props.className, "object-cover");
+    assert.equal(props.style.objectPosition, "center");
+    assert.ok(props.sizes.includes("767px") && props.sizes.includes("1023px"));
+  }
+  renderToStaticMarkup(
+    React.createElement(Card, {
+      chapter: { ...chapters.chapterPreviews[0], imagePosition: "50% 35%" },
+    }),
+  );
+  assert.equal(calls.at(-1).style.objectPosition, "50% 35%");
+  const fallback = renderToStaticMarkup(
+    React.createElement(Card, {
+      chapter: { ...chapters.chapterPreviews[0], image: undefined },
+    }),
+  );
+  assert.match(fallback, /WFSA/);
+  assert.doesNotMatch(fallback, /<img/);
 });

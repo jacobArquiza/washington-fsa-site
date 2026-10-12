@@ -16,7 +16,9 @@ export default function ChapterPreviewCard({
             src={chapter.image}
             alt={chapter.imageAlt ?? ""}
             fill
-            sizes="(max-width: 640px) 85vw, (max-width: 1024px) 55vw, 38vw"
+            sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) 42vw, 30vw"
+            loading="lazy"
+            style={{ objectPosition: chapter.imagePosition ?? "center" }}
             className="object-cover"
           />
         ) : (
