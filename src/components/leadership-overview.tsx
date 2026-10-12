@@ -21,7 +21,7 @@ export default function LeadershipOverview() {
           </h2>
           <p className="mt-6 max-w-md leading-relaxed text-ink/80">
             See how student leadership connects our statewide alliance, campus
-            chapters, and Filipino communities across Washington.
+            chapters, and AAPI communities across Washington.
           </p>
           <Link href="/leadership" className="pill-link mt-8">
             About WFSA leadership <span aria-hidden="true">↗</span>

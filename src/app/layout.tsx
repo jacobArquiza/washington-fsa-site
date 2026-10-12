@@ -19,7 +19,7 @@ const newsreader = Newsreader({
 export const metadata: Metadata = {
   title: "Washington Filipino Student Alliance",
   description:
-    "Connecting Filipino student communities across Washington State.",
+    "Connecting Asian American and Pacific Islander (AAPI) student communities across Washington through culture, collaboration, and leadership.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

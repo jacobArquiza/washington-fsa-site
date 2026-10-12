@@ -121,9 +121,9 @@ export default function ChaptersOverview() {
             {chapterNetworkStats.organizations} organizations.
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-snug sm:text-base">
-            Our chapters connect Filipino student communities across Washington.
-            Explore the schools and organizations that make up our statewide
-            network.
+            Our chapters connect AAPI student organizations across Washington.
+            Explore the schools and communities that make up our growing
+            statewide network.
           </p>
           <Link
             href="/chapters"
