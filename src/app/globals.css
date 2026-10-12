@@ -97,6 +97,39 @@ header :where(a, button):focus-visible {
   outline-offset: 4px;
 }
 
+/* Shared alpha masks give both decorative maps the same restrained warm tint. */
+.section-motif {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--red);
+  opacity: 0.075;
+  mask-mode: alpha;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+.mission-motif {
+  mask-image: url("/hero/philippines.svg");
+  aspect-ratio: 748 / 945;
+  width: clamp(16rem, 42vw, 38rem);
+  top: 3rem;
+  left: clamp(0rem, 3vw, 6rem);
+}
+.leadership-motif {
+  mask-image: url("/hero/washington.svg");
+  aspect-ratio: 1;
+  width: clamp(20rem, 68vw, 54rem);
+  top: 22rem;
+  right: 0;
+  opacity: 0.06;
+}
+@media (min-width: 1024px) {
+  .leadership-motif {
+    top: 4rem;
+  }
+}
+
 /* The ordered tiers and named role list describe the hierarchy without color or lines. */
 .org-chart {
   display: flex;

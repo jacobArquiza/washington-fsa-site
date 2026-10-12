@@ -41,9 +41,10 @@ export default function Mission() {
     <section
       id="mission"
       aria-labelledby="mission-title"
-      className="relative isolate overflow-x-clip bg-cream px-4 py-16 sm:px-6 md:px-12 md:py-24"
+      className="relative isolate overflow-hidden bg-cream px-4 py-16 sm:px-6 md:px-12 md:py-24"
     >
-      <div className="mx-auto grid w-full max-w-[1440px] items-start gap-8 md:gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
+      <span aria-hidden="true" className="section-motif mission-motif" />
+      <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-start gap-8 md:gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-20">
         <div className="min-w-0">
           <h2
             id="mission-title"
