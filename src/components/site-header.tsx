@@ -76,11 +76,9 @@ export default function SiteHeader() {
         <nav
           aria-label="Primary navigation"
           className={`relative flex flex-wrap items-center justify-between rounded-[30px] border px-4 py-2 shadow-sm backdrop-blur-xl transition-[background-color,border-color,color] duration-300 sm:px-6 sm:py-3 lg:flex-nowrap lg:rounded-full ${
-            lightSurface
-              ? "border-ink/15 bg-ivory/85 text-ink"
-              : isOpen
-                ? "border-white/30 bg-black/40 text-white"
-                : "border-white/30 bg-white/5 text-white"
+            lightSurface || isOpen
+              ? "border-white/30 bg-black/70 text-white"
+              : "border-white/25 bg-black/60 text-white"
           }`}
         >
           <Link
