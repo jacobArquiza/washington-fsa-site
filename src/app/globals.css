@@ -121,19 +121,12 @@ header :where(a, button):focus-visible {
   width: 100%;
   max-width: 24rem;
   margin-inline: auto;
-  border: 1px solid color-mix(in srgb, var(--deep-blue) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
   border-radius: 0.75rem;
   background: var(--cream);
   padding: 1.25rem;
   text-align: center;
   overflow-wrap: break-word;
-}
-.org-tier-label {
-  margin-bottom: 0.5rem;
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
 }
 .org-person-name {
   font-family: var(--font-manrope), sans-serif;
@@ -164,7 +157,6 @@ header :where(a, button):focus-visible {
 .org-executive-group {
   max-width: none;
   background: var(--ivory);
-  border-color: var(--red);
 }
 .org-branches {
   display: grid;
@@ -175,24 +167,22 @@ header :where(a, button):focus-visible {
   min-width: 0;
 }
 .org-officer-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   height: 100%;
-  border: 1px solid color-mix(in srgb, var(--red) 35%, transparent);
-  border-top: 3px solid var(--red);
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
   border-radius: 0.5rem;
   background: var(--cream);
   padding: 1rem 0.75rem;
 }
 .org-level[data-tier="regional-senate"] .org-node {
-  border-color: var(--gold);
-  border-top-width: 4px;
   background: var(--ivory);
 }
-.org-level[data-tier="campus-officers"] .org-node {
-  border-color: var(--deep-blue);
-}
 .org-level[data-tier="general-body"] .org-node {
-  background: var(--dark-cream);
-  border-color: transparent;
+  background: color-mix(in srgb, var(--cream) 60%, var(--ivory));
 }
 @media (min-width: 640px) {
   .org-branches {

@@ -157,8 +157,7 @@ test("chart renders every approved name, vacancy, and governance level without t
     executive.indexOf("Vacant") < executive.indexOf("Finance Director"),
   );
   assert.match(html, /org-person-name/);
-  for (let tier = 1; tier <= 5; tier++)
-    assert.ok(html.includes(`Tier ${tier}`));
+  assert.doesNotMatch(html, /Tier [1-5]|org-tier-label/);
 });
 test("carousel renders exactly 21 real cards with native looping and a logical 1\/21 counter", () => {
   const wrapper = ({ children, className, ...props }) =>

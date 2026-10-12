@@ -20,12 +20,11 @@ export default function OrganizationChart() {
         aria-label="WFSA hierarchy, from statewide leadership to the general body"
         className="org-chart"
       >
-        {organizationHierarchy.map((level, index) => (
+        {organizationHierarchy.map((level) => (
           <li key={level.id} className="org-level" data-tier={level.id}>
             <div
               className={`org-node ${level.roles ? "org-executive-group" : ""}`}
             >
-              <p className="org-tier-label">Tier {index + 1}</p>
               {officerName(level.officerId) && (
                 <p className="org-person-name">
                   {officerName(level.officerId)}
