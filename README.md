@@ -126,6 +126,17 @@ Environment variable names should be documented in:
 
 Actual credentials and secrets belong only in local or deployment environment configuration and must never be committed to Git.
 
+### Social sharing URL
+
+When the production domain is confirmed, set `NEXT_PUBLIC_SITE_URL` to its full
+HTTPS origin in the deployment environment and rebuild. Open Graph and Twitter
+images use this canonical origin. On Vercel, `VERCEL_PROJECT_PRODUCTION_URL` is
+used automatically if no explicit origin is set; branch preview URLs are never
+used. Local builds without either variable use `http://localhost:3000`.
+
+The static social preview is `public/og/wfsa-social.png` (1200 × 630). The official
+transparent logo is preserved unchanged in `public/branding/wfsa-logo.png`.
+
 ## Project Status
 
 The WFSA website is currently under active development.
