@@ -71,8 +71,12 @@ export type OrganizationLevel = {
   label: string;
   description?: string;
   officerId?: string;
-  roles?: readonly { id: string; label: string; officerId?: string }[];
-  emphasis?: boolean;
+  roles?: readonly {
+    id: string;
+    label: string;
+    officerId?: string;
+    personnelStatus?: "pending";
+  }[];
 };
 
 // Structure references the approved roster without duplicating personal names.
@@ -81,7 +85,6 @@ export const organizationHierarchy: readonly OrganizationLevel[] = [
     id: "commissioner",
     label: "Commissioner / Executive Director",
     officerId: "jerico-magat",
-    emphasis: true,
   },
   {
     id: "executive-team",
@@ -98,7 +101,16 @@ export const organizationHierarchy: readonly OrganizationLevel[] = [
         label: "Finance Director",
         officerId: "finance-director",
       },
-      { id: "cultural-chiefs", label: "Cultural Chiefs" },
+      {
+        id: "cultural-chiefs",
+        label: "Cultural Chiefs",
+        personnelStatus: "pending",
+      },
+      {
+        id: "chief-of-staff",
+        label: "Chief of Staff",
+        officerId: "oliver-casimiro",
+      },
     ],
   },
   {
@@ -108,9 +120,4 @@ export const organizationHierarchy: readonly OrganizationLevel[] = [
   },
   { id: "campus-officers", label: "Campus Chapter Officers" },
   { id: "general-body", label: "General Body" },
-];
-
-// Visible alongside the chart; no reporting line or exact placement is inferred.
-export const additionalExecutiveOfficerIds: readonly string[] = [
-  "oliver-casimiro",
 ];

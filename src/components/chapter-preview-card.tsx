@@ -41,7 +41,7 @@ export default function ChapterPreviewCard({
             </Link>
           )}
         </div>
-        <h3 className="mt-1 font-display text-2xl font-semibold leading-tight sm:text-3xl">
+        <h3 className="mt-1 break-words font-display text-2xl font-semibold leading-tight sm:text-3xl">
           {chapter.schoolName}
         </h3>
         {chapter.clubs.length > 0 ? (

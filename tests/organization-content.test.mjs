@@ -29,27 +29,27 @@ function load(relative, dependencies = {}) {
 const chapters = load("../src/data/chapter-previews.ts");
 const leadership = load("../src/data/leadership.ts");
 const expectedClubs = {
-  Mariner: ["PUSO", "ASU", "PI Club"],
-  "Mountlake Terrace": ["FASA", "ASU"],
-  Meadowdale: ["FASA", "ASU"],
-  Kamiak: ["FSU"],
-  Everett: ["FSU"],
-  Shorecrest: ["FASA"],
-  Lynnwood: ["ASU"],
-  "Edmonds-Woodway": ["ASU"],
-  Inglemoor: ["AAPI", "FASA"],
-  Sammamish: ["Filipino Club"],
-  "Shoreline Community College": ["FASA"],
-  Juanita: ["Vietnamese Club"],
-  "Seattle Prep": ["APIC"],
-  "O'Dea": [],
-  "Bishop Blanchet": ["AAPISU"],
-  "Archbishop Murphy": ["API"],
-  Interlake: ["FASA"],
-  "Forest Ridge": ["AAPISU"],
-  Bothell: [],
-  Hazen: [],
-  "Kennedy Catholic": [],
+  "Mariner High School": ["PUSO", "ASU", "PI Club"],
+  "Mountlake Terrace High School": ["FASA", "ASU"],
+  "Meadowdale High School": ["FASA", "ASU"],
+  "Kamiak High School": ["FSU"],
+  "Everett High School": ["FSU"],
+  "Shorecrest High School": ["SC FSU"],
+  "Lynnwood High School": ["ASU"],
+  "Edmonds-Woodway High School": ["ASU"],
+  "Inglemoor High School": ["AAPI", "FASA"],
+  "Sammamish High School": ["Filipino Club"],
+  "Shoreline College": ["FASA"],
+  "Juanita High School": ["Vietnamese Club"],
+  "Seattle Preparatory School": ["APIC"],
+  "O'Dea High School": [],
+  "Bishop Blanchet High School": ["AAPISU"],
+  "Archbishop Murphy High School": ["API"],
+  "Interlake High School": ["FASA"],
+  "Forest Ridge School of the Sacred Heart": ["AAPISU"],
+  "Bothell High School": [],
+  "Hazen High School": [],
+  "Kennedy Catholic High School": [],
 };
 
 test("chapter inventory has 21 unique schools, 22 approved affiliations, and month-precision join dates", () => {
@@ -86,7 +86,7 @@ test("chapter inventory has 21 unique schools, 22 approved affiliations, and mon
   assert.deepEqual(names, [...names].sort());
   assert.equal(chapters.knownAffiliationCount, 22);
   assert.equal(chapters.chapterNetworkStats.schools, 21);
-  assert.equal(chapters.chapterNetworkStats.organizations, "22+");
+  assert.equal(chapters.chapterNetworkStats.organizations, "20+");
   assert.throws(() => chapters.formatJoinMonth("2026-06-01"), RangeError);
 });
 test("approved roster combines the top position once and leaves Finance explicitly vacant", () => {
@@ -103,19 +103,18 @@ test("approved roster combines the top position once and leaves Finance explicit
   assert.equal(leadership.organizationHierarchy[0].officerId, "jerico-magat");
   const roles = leadership.organizationHierarchy[1].roles;
   assert.equal(
-    roles.find((x) => x.id === "cultural-chiefs").officerId,
-    undefined,
+    roles.find((x) => x.id === "cultural-chiefs").personnelStatus,
+    "pending",
   );
   assert.equal(
     approved.find((x) => x.role === "Finance Director").vacant,
     true,
   );
-  assert.deepEqual(leadership.additionalExecutiveOfficerIds, [
-    "oliver-casimiro",
-  ]);
+  assert.equal(roles.length, 5);
+  assert.equal(leadership.organizationHierarchy.length, 5);
   assert.equal(
     roles.some((x) => x.officerId === "oliver-casimiro"),
-    false,
+    true,
   );
 });
 test("chart renders every approved name, vacancy, and governance level without the obsolete warning", () => {
@@ -144,8 +143,22 @@ test("chart renders every approved name, vacancy, and governance level without t
     html,
     /Title pending|organization-terminology|Historical records|confirmation before publication/,
   );
-  assert.ok(!html.split("<aside")[0].includes("Oliver Casimiro"));
-  assert.match(html, /Additional executive leadership/);
+  assert.doesNotMatch(html, /<aside/);
+  assert.match(html, /Name pending confirmation/);
+  assert.equal((html.match(/class="org-level"/g) || []).length, 5);
+  const executive = html
+    .split('aria-label="Executive Team roles"')[1]
+    .split("</ul>")[0];
+  assert.ok(executive.includes("Oliver Casimiro"));
+  assert.ok(
+    executive.indexOf("Alice Pham") < executive.indexOf("Vice President"),
+  );
+  assert.ok(
+    executive.indexOf("Vacant") < executive.indexOf("Finance Director"),
+  );
+  assert.match(html, /org-person-name/);
+  for (let tier = 1; tier <= 5; tier++)
+    assert.ok(html.includes(`Tier ${tier}`));
 });
 test("carousel renders exactly 21 real cards with native looping and a logical 1\/21 counter", () => {
   const wrapper = ({ children, className, ...props }) =>
@@ -185,7 +198,7 @@ test("carousel renders exactly 21 real cards with native looping and a logical 1
   assert.equal((html.match(/Joined June 2026/g) || []).length, 21);
   assert.equal((html.match(/Club details forthcoming/g) || []).length, 4);
   assert.match(html.replace(/<[^>]+>/g, ""), /1\/21/);
-  assert.match(html, /Mariner, 1 of 21/);
+  assert.match(html, /Mariner High School, 1 of 21/);
   assert.match(html, /bg-deep-blue/);
   assert.doesNotMatch(html, /2050ad|Across Washington|More to explore/);
   assert.equal(options.loop, true);

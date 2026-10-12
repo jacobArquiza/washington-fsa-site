@@ -15,7 +15,7 @@ export type ChapterPreview = {
 export const chapterPreviews: readonly ChapterPreview[] = [
   {
     id: "mariner",
-    schoolName: "Mariner",
+    schoolName: "Mariner High School",
     clubs: ["PUSO", "ASU", "PI Club"],
     joinMonth: "2026-06",
     image: "/chapters/mariner-high.jpg",
@@ -23,121 +23,121 @@ export const chapterPreviews: readonly ChapterPreview[] = [
   },
   {
     id: "archbishop-murphy",
-    schoolName: "Archbishop Murphy",
+    schoolName: "Archbishop Murphy High School",
     clubs: ["API"],
     joinMonth: "2026-06",
   },
   {
     id: "bishop-blanchet",
-    schoolName: "Bishop Blanchet",
+    schoolName: "Bishop Blanchet High School",
     clubs: ["AAPISU"],
     joinMonth: "2026-06",
   },
   {
     id: "bothell",
-    schoolName: "Bothell",
+    schoolName: "Bothell High School",
     clubs: [],
     joinMonth: "2026-06",
   },
   {
     id: "edmonds-woodway",
-    schoolName: "Edmonds-Woodway",
+    schoolName: "Edmonds-Woodway High School",
     clubs: ["ASU"],
     joinMonth: "2026-06",
   },
   {
     id: "everett",
-    schoolName: "Everett",
+    schoolName: "Everett High School",
     clubs: ["FSU"],
     joinMonth: "2026-06",
   },
   {
     id: "forest-ridge",
-    schoolName: "Forest Ridge",
+    schoolName: "Forest Ridge School of the Sacred Heart",
     clubs: ["AAPISU"],
     joinMonth: "2026-06",
   },
   {
     id: "hazen",
-    schoolName: "Hazen",
+    schoolName: "Hazen High School",
     clubs: [],
     joinMonth: "2026-06",
   },
   {
     id: "inglemoor",
-    schoolName: "Inglemoor",
+    schoolName: "Inglemoor High School",
     clubs: ["AAPI", "FASA"],
     joinMonth: "2026-06",
   },
   {
     id: "interlake",
-    schoolName: "Interlake",
+    schoolName: "Interlake High School",
     clubs: ["FASA"],
     joinMonth: "2026-06",
   },
   {
     id: "juanita",
-    schoolName: "Juanita",
+    schoolName: "Juanita High School",
     clubs: ["Vietnamese Club"],
     joinMonth: "2026-06",
   },
   {
     id: "kamiak",
-    schoolName: "Kamiak",
+    schoolName: "Kamiak High School",
     clubs: ["FSU"],
     joinMonth: "2026-06",
   },
   {
     id: "kennedy-catholic",
-    schoolName: "Kennedy Catholic",
+    schoolName: "Kennedy Catholic High School",
     clubs: [],
     joinMonth: "2026-06",
   },
   {
     id: "lynnwood",
-    schoolName: "Lynnwood",
+    schoolName: "Lynnwood High School",
     clubs: ["ASU"],
     joinMonth: "2026-06",
   },
   {
     id: "meadowdale",
-    schoolName: "Meadowdale",
+    schoolName: "Meadowdale High School",
     clubs: ["FASA", "ASU"],
     joinMonth: "2026-06",
   },
   {
     id: "mountlake-terrace",
-    schoolName: "Mountlake Terrace",
+    schoolName: "Mountlake Terrace High School",
     clubs: ["FASA", "ASU"],
     joinMonth: "2026-06",
   },
   {
     id: "odea",
-    schoolName: "O'Dea",
+    schoolName: "O'Dea High School",
     clubs: [],
     joinMonth: "2026-06",
   },
   {
     id: "sammamish",
-    schoolName: "Sammamish",
+    schoolName: "Sammamish High School",
     clubs: ["Filipino Club"],
     joinMonth: "2026-06",
   },
   {
     id: "seattle-prep",
-    schoolName: "Seattle Prep",
+    schoolName: "Seattle Preparatory School",
     clubs: ["APIC"],
     joinMonth: "2026-06",
   },
   {
     id: "shorecrest",
-    schoolName: "Shorecrest",
-    clubs: ["FASA"],
+    schoolName: "Shorecrest High School",
+    clubs: ["SC FSU"],
     joinMonth: "2026-06",
   },
   {
     id: "shoreline-community-college",
-    schoolName: "Shoreline Community College",
+    schoolName: "Shoreline College",
     clubs: ["FASA"],
     joinMonth: "2026-06",
   },
@@ -150,8 +150,8 @@ export const knownAffiliationCount = chapterPreviews.reduce(
 
 export const chapterNetworkStats = {
   schools: chapterPreviews.length,
-  // A lower bound: four schools have not supplied their club names.
-  organizations: `${knownAffiliationCount}+`,
+  // Conservative public wording until the complete affiliation inventory is approved.
+  organizations: "20+",
 };
 
 const monthNames = [
