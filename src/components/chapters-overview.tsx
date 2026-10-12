@@ -13,16 +13,9 @@ import {
 } from "@/components/ui/carousel";
 import { chapterNetworkStats, chapterPreviews } from "@/data/chapter-previews";
 
-// Repeat the small preview set so Embla can keep the same two-card framing.
-const carouselChapters = [
-  ...chapterPreviews,
-  ...chapterPreviews,
-  ...chapterPreviews,
-];
-
 export default function ChaptersOverview() {
   const [api, setApi] = useState<CarouselApi>();
-  const [activeIndex, setActiveIndex] = useState(5);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     if (!api) return;
@@ -115,7 +108,7 @@ export default function ChaptersOverview() {
     <section
       id="chapters"
       aria-labelledby="chapters-title"
-      className="overflow-x-clip bg-[#2050ad] px-4 py-16 text-white sm:px-6 md:px-12 md:py-24"
+      className="overflow-x-clip bg-deep-blue px-4 py-16 text-white sm:px-6 md:px-12 md:py-24"
     >
       <div className="mx-auto grid w-full max-w-[1440px] items-start gap-10 md:grid-cols-[minmax(0,1.65fr)_minmax(240px,0.85fr)] md:gap-5 lg:gap-10">
         <div className="min-w-0 md:order-2">
@@ -144,7 +137,7 @@ export default function ChaptersOverview() {
           setApi={setApi}
           opts={{
             align: "end",
-            startIndex: 5,
+            startIndex: 0,
             loop: true,
             breakpoints: {
               "(prefers-reduced-motion: reduce)": { duration: 0 },
@@ -154,10 +147,10 @@ export default function ChaptersOverview() {
           className="chapters-carousel-bleed min-w-0 md:order-1"
         >
           <CarouselContent className="ml-0 items-stretch md:-ml-4">
-            {carouselChapters.map((chapter, index) => (
+            {chapterPreviews.map((chapter, index) => (
               <CarouselItem
-                key={`${chapter.id}-${index}`}
-                aria-label={`${chapter.title}, ${(index % chapterPreviews.length) + 1} of ${chapterPreviews.length}`}
+                key={chapter.id}
+                aria-label={`${chapter.schoolName}, ${index + 1} of ${chapterPreviews.length}`}
                 className="basis-full pl-0 transition-[filter,opacity] duration-500 ease-out motion-reduce:transition-none md:basis-[68%] md:pl-4 lg:basis-[43%]"
               >
                 <div className="mx-auto h-full w-[calc(100%-1rem)] md:w-full">
@@ -169,7 +162,7 @@ export default function ChaptersOverview() {
           <div className="mt-4 flex items-center justify-center gap-3">
             <CarouselPrevious
               aria-label="Previous chapter"
-              className="static h-11 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-[#2050ad]"
+              className="static h-11 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-deep-blue"
             >
               Back
             </CarouselPrevious>
@@ -177,12 +170,11 @@ export default function ChaptersOverview() {
               className="min-w-9 text-center text-xs font-semibold tabular-nums"
               aria-live="polite"
             >
-              {(activeIndex % chapterPreviews.length) + 1}/
-              {chapterPreviews.length}
+              {activeIndex + 1}/{chapterPreviews.length}
             </span>
             <CarouselNext
               aria-label="Next chapter"
-              className="static h-11 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-[#2050ad]"
+              className="static h-11 w-20 translate-none rounded-full border-2 border-white bg-transparent text-white shadow-none hover:bg-white hover:text-deep-blue"
             >
               Next
             </CarouselNext>
